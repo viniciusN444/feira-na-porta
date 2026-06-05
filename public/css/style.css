@@ -1,0 +1,521 @@
+:root{
+
+    /* VERDES */
+    --verde-principal: #2E7D32;
+    --verde-escuro: #1B5E20;
+    --verde-claro: #66BB6A;
+
+    /* FUNDOS */
+    --branco: #FFFFFF;
+    --fundo-claro: #F5F7F2;
+    --cinza-suave: #E0E0E0;
+
+    /* DESTAQUES */
+    --laranja: #FF8F00;
+    --amarelo-suave: #FBC02D;
+
+    /* TEXTOS */
+    --texto-principal: #212121;
+    --texto-secundario: #616161;
+
+}
+
+/* ================= HEADER ================= */
+
+.header-principal{
+
+    background: linear-gradient(
+        90deg,
+        #166819,
+        #1f7a1f
+    );
+
+    padding: 8px 0;
+
+    box-shadow:
+    0 2px 10px rgba(0,0,0,0.15);
+
+}
+
+.header-principal .container{
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+}
+
+/* ================= LOGO ================= */
+.logo{
+
+    color: white;
+
+    font-size: 1.4rem;
+
+    font-weight: 800;
+
+    margin: 0;
+
+    line-height: 1;
+    text-align: center;
+
+}
+
+/* ================= BARRA ================= */
+
+.barra-pesquisa{
+
+    flex: 1;
+
+    max-width: 600px;
+
+    border-radius: 14px !important;
+
+    border: none !important;
+
+    padding: 12px 18px !important;
+
+    font-size: 1rem;
+
+    box-shadow:
+    0 2px 10px rgba(0,0,0,0.08);
+
+}
+
+.barra-pesquisa:focus{
+
+    box-shadow:
+    0 0 0 4px rgba(255,255,255,0.2) !important;
+
+}
+
+/* ================= BOTÃO CARRINHO ================= */
+
+.carrinho-btn{
+
+    background: white !important;
+
+    color: #166819 !important;
+
+    border-radius: 14px !important;
+
+    padding: 12px 22px !important;
+
+    font-weight: 700 !important;
+
+    border: none !important;
+
+    display: flex !important;
+
+    align-items: center;
+
+    gap: 8px;
+
+    transition: 0.3s;
+
+    flex-shrink: 0;
+
+    box-shadow:
+    0 2px 8px rgba(0,0,0,0.12);
+
+}
+
+.carrinho-btn:hover{
+
+    transform:
+    translateY(-2px);
+
+    background:
+    #f3f3f3 !important;
+
+}
+
+/* ================= MENU ================= */
+
+.menu-lateral{
+
+    background-color:
+    var(--branco);
+
+    min-height: 100vh;
+
+    padding: 25px;
+
+    border-right:
+    1px solid var(--cinza-suave);
+
+}
+
+.menu-lateral h4{
+
+    font-weight: bold;
+
+    margin-bottom: 20px;
+
+}
+
+.menu-lateral ul{
+
+    list-style: none;
+
+    padding: 0;
+
+}
+
+.menu-lateral li{
+
+    padding: 12px 16px;
+
+    margin-bottom: 10px;
+
+    cursor: pointer;
+
+    border-radius: 10px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+
+}
+
+.menu-lateral li:hover{
+
+    background:
+    rgba(46,125,50,0.1);
+
+    color:
+    var(--verde-principal);
+
+}
+
+/* ================= CONTEÚDO ================= */
+
+.conteudo-principal{
+
+    padding: 30px;
+
+    background-color:
+    var(--fundo-claro);
+
+}
+
+/* ================= BANNER ================= */
+
+.banner-principal{
+
+    height: 350px;
+
+    border-radius: 25px;
+
+    margin-top: 20px;
+
+    padding: 40px;
+
+    background-image:
+    url('https://images.unsplash.com/photo-1542838132-92c53300491e');
+
+    background-size: cover;
+
+    background-position: center;
+
+    display: flex;
+
+    align-items: center;
+
+    overflow: hidden;
+
+}
+
+.banner-texto{
+
+    width: 45%;
+
+    color: white;
+
+}
+
+.banner-texto h1{
+
+    font-size: 3rem;
+
+    font-weight: bold;
+
+}
+
+.banner-texto p{
+
+    font-size: 1.2rem;
+
+}
+
+.banner-btn{
+
+    background-color:
+    var(--laranja);
+
+    color:
+    var(--branco);
+
+    font-weight: bold;
+
+    padding: 12px 22px;
+
+    border-radius: 12px;
+
+    border: none;
+
+}
+
+.banner-btn:hover{
+
+    background-color:
+    #e67e00;
+
+    color:
+    white;
+
+}
+
+/* ================= PRODUTOS ================= */
+
+.titulo-produtos{
+
+    margin: 35px 0 20px;
+
+    font-weight: bold;
+
+}
+
+.produto-card{
+
+    border: none;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    transition: 0.3s;
+
+    box-shadow:
+    0 4px 15px rgba(0,0,0,0.08);
+
+    background: white;
+
+}
+
+.produto-card:hover{
+
+    transform:
+    translateY(-6px);
+
+    box-shadow:
+    0 8px 25px rgba(0,0,0,0.15);
+
+}
+
+.produto-card img{
+
+    height: 220px;
+
+    object-fit: cover;
+
+}
+
+.preco{
+
+    color:
+    var(--verde-principal);
+
+    font-size: 1.2rem;
+
+    font-weight: bold;
+
+}
+
+.btn-adicionar{
+
+    width: 100%;
+
+    background-color:
+    var(--verde-principal)
+    !important;
+
+    color:
+    white !important;
+
+    border-radius: 12px !important;
+
+    font-weight: bold !important;
+
+    padding: 10px;
+
+    border: none !important;
+
+}
+
+.btn-adicionar:hover{
+
+    background-color:
+    var(--verde-escuro)
+    !important;
+
+}
+
+/* ================= CARRINHO ================= */
+
+.finalizar-btn{
+
+    background-color:
+    var(--verde-principal);
+
+    color:
+    white;
+
+    font-weight: bold;
+
+    border: none;
+
+}
+
+.finalizar-btn:hover{
+
+    background-color:
+    var(--verde-escuro);
+
+    color:
+    white;
+
+}
+
+.item-carrinho{
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 12px;
+
+}
+
+.btn-remover{
+
+    border: none;
+
+    background: none;
+
+    cursor: pointer;
+
+    font-size: 1rem;
+
+}
+
+/* ================= RESPONSIVO ================= */
+
+@media(max-width:768px){
+
+    .header-principal .container{
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 18px;
+
+    }
+
+    /* .logo-area{
+
+        justify-content: center;
+
+    }
+
+    .logo{
+
+        font-size: 2rem;
+
+    }
+
+    .logo-img{
+
+        width: 100%;
+
+        height: 65px;
+
+        object-fit: cover;
+
+    } */
+
+    .barra-pesquisa{
+
+        max-width: 100%;
+
+        width: 100%;
+
+    }
+
+    .carrinho-btn{
+
+        justify-content: center;
+
+    }
+
+    .menu-lateral{
+
+        min-height: auto;
+
+        border-right: none;
+
+        border-bottom:
+        1px solid var(--cinza-suave);
+
+    }
+
+    .menu-lateral ul{
+
+        display: flex;
+
+        gap: 10px;
+
+        overflow-x: auto;
+
+    }
+
+    .menu-lateral li{
+
+        white-space: nowrap;
+
+    }
+
+    .conteudo-principal{
+
+        padding: 15px;
+
+    }
+
+    .banner-principal{
+
+        height: auto;
+
+        padding: 30px 20px;
+
+    }
+
+    .banner-texto{
+
+        width: 100%;
+
+    }
+
+    .banner-texto h1{
+
+        font-size: 2rem;
+
+    }
+
+}

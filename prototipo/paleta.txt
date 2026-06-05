@@ -1,0 +1,20 @@
+//Paleta
+:root {
+  /* VERDES */
+  --verde-principal: #2E7D32;
+  --verde-escuro: #1B5E20;
+  --verde-claro: #66BB6A;
+
+  /* FUNDOS */
+  --branco: #FFFFFF;
+  --fundo-claro: #F5F7F2;
+  --cinza-suave: #E0E0E0;
+
+  /* DESTAQUES */
+  --laranja: #FF8F00;
+  --amarelo-suave: #FBC02D;
+
+  /* TEXTOS */
+  --texto-principal: #212121;
+  --texto-secundario: #: #616161;
+}
