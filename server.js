@@ -12,7 +12,7 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 /* =========================
-   ROTAS HTML
+   ROTAS PÁGINAS
 ========================= */
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/views/index.html');
@@ -185,7 +185,7 @@ app.delete("/pedidos/:id", (req, res) => {
 });
 
 /* =========================
-   PORTA (CORRIGIDO PARA RENDER)
+   PORTA (OBRIGATÓRIO RENDER)
 ========================= */
 
 const PORT = process.env.PORT || 3000;

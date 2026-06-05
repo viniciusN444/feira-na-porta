@@ -1,37 +1,14 @@
-const mysql =
-require("mysql2");
+const mysql = require("mysql2");
 
-const conexao =
-mysql.createConnection({
-
-    host: "localhost",
-
-    user: "root",
-
-    password: "",
-
-    database: "feira_na_porta"
-
-});
+const conexao = mysql.createConnection(process.env.MYSQL_URL);
 
 conexao.connect((erro) => {
-
-    if(erro){
-
-        console.log(
-            "Erro ao conectar:",
-            erro
-        );
-
-    }else{
-
-        console.log(
-            "MySQL conectado!"
-        );
-
+    if (erro) {
+        console.log("Erro ao conectar:", erro);
+    } else {
+        console.log("MySQL conectado!");
     }
-
 });
 
-module.exports =
-conexao;
+console.log("MYSQL_URL:", process.env.MYSQL_URL);
+module.exports = conexao;
