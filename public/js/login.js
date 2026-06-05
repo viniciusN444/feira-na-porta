@@ -13,9 +13,9 @@ botaoLogin.addEventListener("click", () => {
     document.getElementById("senha").value;
 
     if(
-        usuario === "admin"
+        usuario === "luizFeipe10"
         &&
-        senha === "1234"
+        senha === "feiraLuiz1"
     ){
 
         localStorage.setItem(
