@@ -7,15 +7,15 @@ document.getElementById("mensagem-erro");
 botaoLogin.addEventListener("click", () => {
 
     const usuario =
-    document.getElementById("usuario").value;
+document.getElementById("usuario").value.trim();
 
-    const senha =
-    document.getElementById("senha").value;
+const senha =
+document.getElementById("senha").value.trim();
 
     if(
-        usuario === "luizFeipe10"
+        usuario === "luizFelipe"
         &&
-        senha === "feiraLuiz1"
+        senha === "feiraLuiz10"
     ){
 
         localStorage.setItem(
