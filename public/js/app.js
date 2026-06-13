@@ -2,29 +2,37 @@ let mensagemPedido = "";
 
 let carrinho = [];
 
-const containerCarrinho =
-document.getElementById("itens-carrinho");
+const containerCarrinho = document.getElementById("itens-carrinho");
 
-const subtotalCarrinho =
-document.getElementById("subtotal-carrinho");
+const subtotalCarrinho = document.getElementById("subtotal-carrinho");
 
-const totalFinal =
-document.getElementById("total-final");
+const totalFinal = document.getElementById("total-final");
 
-const freteCarrinho =
-document.getElementById("frete-carrinho");
+const freteCarrinho = document.getElementById("frete-carrinho");
 
-const botaoFinalizar =
-document.querySelector(".finalizar-btn");
+const botaoFinalizar = document.querySelector(".finalizar-btn");
 
-const campoBusca =
-document.getElementById("campo-busca");
+const campoBusca = document.getElementById("campo-busca");
 
-const categorias =
-document.querySelectorAll(".categoria-item");
+const categorias = document.querySelectorAll(".categoria-item");
 
-const areaProdutos =
-document.getElementById("area-produtos");
+const areaProdutos = document.getElementById("area-produtos");
+
+const botaoMaisModal = document.getElementById("btn-mais-modal");
+
+const botaoMenosModal = document.getElementById("btn-menos-modal");
+
+const botaoContinuar = document.getElementById("continuar-comprando");
+
+const botaoIrCarrinho = document.getElementById("abrir-carrinho");
+
+const quantidadeModal = document.getElementById("quantidade-modal");
+
+const modalAdicionado = document.getElementById("modal-adicionado");
+
+const nomeProdutoModal = document.getElementById("nome-produto-modal");
+
+let produtoSelecionado = null;
 
 let total = 0;
 
@@ -32,42 +40,29 @@ const pedidoMinimo = 50;
 
 const valorFrete = 15;
 
-const carrinhoSalvo =
-localStorage.getItem("carrinho");
+const carrinhoSalvo = localStorage.getItem("carrinho");
 
-if(carrinhoSalvo){
-
-    carrinho =
-    JSON.parse(carrinhoSalvo);
-
+if (carrinhoSalvo) {
+  carrinho = JSON.parse(carrinhoSalvo);
 }
 
 carrinho.forEach((produto) => {
-
-    total +=
-    produto.preco * produto.quantidade;
-
+  total += produto.preco * produto.quantidade;
 });
 
-function atualizarCarrinho(){
+function atualizarCarrinho() {
+  containerCarrinho.innerHTML = "";
 
-    containerCarrinho.innerHTML = "";
+  mensagemPedido = "";
 
-    mensagemPedido = "";
+  subtotalCarrinho.textContent = `Subtotal: R$ ${total.toFixed(2)}`;
 
-    subtotalCarrinho.textContent =
-    `Subtotal: R$ ${total.toFixed(2)}`;
+  carrinho.forEach((produto) => {
+    const item = document.createElement("div");
 
-    carrinho.forEach((produto) => {
+    item.classList.add("item-carrinho");
 
-        const item =
-        document.createElement("div");
-
-        item.classList.add(
-            "item-carrinho"
-        );
-
-        item.innerHTML = `
+    item.innerHTML = `
 
             <span>
                 ${produto.nome} x${produto.quantidade}
@@ -79,169 +74,114 @@ function atualizarCarrinho(){
 
         `;
 
-        containerCarrinho.appendChild(item);
+    containerCarrinho.appendChild(item);
 
-        mensagemPedido +=
-        `${produto.nome} x${produto.quantidade} - R$ ${(produto.preco * produto.quantidade).toFixed(2)}%0A`;
+    mensagemPedido += `${produto.nome} x${produto.quantidade} - R$ ${(produto.preco * produto.quantidade).toFixed(2)}%0A`;
 
-        const botaoRemover =
-        item.querySelector(".btn-remover");
+    const botaoRemover = item.querySelector(".btn-remover");
 
-        botaoRemover.addEventListener("click", () => {
+    botaoRemover.addEventListener("click", () => {
+      produto.quantidade--;
 
-            produto.quantidade--;
+      total -= produto.preco;
 
-            total -= produto.preco;
+      if (produto.quantidade <= 0) {
+        carrinho = carrinho.filter((item) => item.nome !== produto.nome);
+      }
 
-            if(produto.quantidade <= 0){
-
-                carrinho = carrinho.filter(
-                    item => item.nome !== produto.nome
-                );
-
-            }
-
-            atualizarCarrinho();
-
-        });
-
+      atualizarCarrinho();
     });
+  });
 
-    if(total < pedidoMinimo){
+  if (total < pedidoMinimo) {
+    botaoFinalizar.disabled = true;
 
-        botaoFinalizar.disabled = true;
+    botaoFinalizar.textContent = `Pedido mínimo R$ ${pedidoMinimo}`;
 
-        botaoFinalizar.textContent =
-        `Pedido mínimo R$ ${pedidoMinimo}`;
+    freteCarrinho.textContent = "Frete: R$ 0,00";
 
-        freteCarrinho.textContent =
-        "Frete: R$ 0,00";
+    totalFinal.textContent = `Total: R$ ${total.toFixed(2)}`;
+  } else {
+    botaoFinalizar.disabled = false;
 
-        totalFinal.textContent =
-        `Total: R$ ${total.toFixed(2)}`;
+    botaoFinalizar.textContent = "Finalizar pedido";
 
-    }else{
+    freteCarrinho.textContent = `Frete: R$ ${valorFrete.toFixed(2)}`;
 
-        botaoFinalizar.disabled = false;
+    const totalComFrete = total + valorFrete;
 
-        botaoFinalizar.textContent =
-        "Finalizar pedido";
+    totalFinal.textContent = `Total: R$ ${totalComFrete.toFixed(2)}`;
+  }
 
-        freteCarrinho.textContent =
-        `Frete: R$ ${valorFrete.toFixed(2)}`;
-
-        const totalComFrete =
-        total + valorFrete;
-
-        totalFinal.textContent =
-        `Total: R$ ${totalComFrete.toFixed(2)}`;
-
-    }
-
-    localStorage.setItem(
-        "carrinho",
-        JSON.stringify(carrinho)
-    );
-
+  localStorage.setItem("carrinho", JSON.stringify(carrinho));
 }
 
 atualizarCarrinho();
 
-function ativarBotoesAdicionar(){
+function ativarBotoesAdicionar() {
+  const botoesAdicionar = document.querySelectorAll(".btn-adicionar");
 
-    const botoesAdicionar =
-    document.querySelectorAll(".btn-adicionar");
+  botoesAdicionar.forEach((botao) => {
+    botao.addEventListener("click", () => {
+      const card = botao.parentElement;
 
-    botoesAdicionar.forEach((botao) => {
+      const nome = card.querySelector(".nome-produto").textContent;
 
-        botao.addEventListener("click", () => {
+      const precoTexto = card.querySelector(".valor-produto").textContent;
 
-            const card =
-            botao.parentElement;
+      const preco = parseFloat(
+        precoTexto
 
-            const nome =
-            card.querySelector(".nome-produto")
-            .textContent;
+          .replace("R$", "")
 
-            const precoTexto =
-            card.querySelector(".valor-produto")
-            .textContent;
+          .replace("/kg", "")
 
-            const preco = parseFloat(
+          .replace("Maço", "")
 
-                precoTexto
+          .replace("/gm", "")
 
-                .replace("R$", "")
+          .replace(",", "."),
+      );
 
-                .replace("/kg", "")
+      const produtoExistente = carrinho.find(
+        (produto) => produto.nome === nome,
+      );
 
-                .replace("Maço", "")
+      produtoSelecionado = {
+        nome,
+        preco,
+      };
 
-                .replace("/gm", "")
+      nomeProdutoModal.textContent = `✅ ${nome}`;
 
-                .replace(",", ".")
+      nomeProdutoModal.textContent = `Adicionar ${nome} ao carrinho?`;
 
-            );
+      quantidadeModal.textContent = 0;
 
-            const produtoExistente =
-            carrinho.find(
-                produto => produto.nome === nome
-            );
-
-            if(produtoExistente){
-
-                produtoExistente.quantidade++;
-
-            }else{
-
-                carrinho.push({
-
-                    nome,
-
-                    preco,
-
-                    quantidade: 1
-
-                });
-
-            }
-
-            total += preco;
-
-            atualizarCarrinho();
-
-        });
-
+      modalAdicionado.style.display = "flex";
     });
-
+  });
 }
 
-function carregarProdutos(){
+function carregarProdutos() {
+  fetch("/produtos")
+    .then((res) => res.json())
 
-    fetch("/produtos")
+    .then((produtos) => {
+      areaProdutos.innerHTML = "";
 
-    .then(res => res.json())
+      produtos.forEach((produto) => {
+        const coluna = document.createElement("div");
 
-    .then(produtos => {
+        coluna.classList.add(
+          "col-12",
 
-        areaProdutos.innerHTML = "";
+          "col-sm-6",
 
-        produtos.forEach((produto) => {
+          "col-md-3",
+        );
 
-            const coluna =
-            document.createElement("div");
-
-            coluna.classList.add(
-
-                "col-12",
-
-                "col-sm-6",
-
-                "col-md-3"
-
-            );
-
-            coluna.innerHTML = `
+        coluna.innerHTML = `
 
                 <div
                 class="card produto-card"
@@ -274,159 +214,168 @@ function carregarProdutos(){
 
             `;
 
-            areaProdutos.appendChild(coluna);
+        areaProdutos.appendChild(coluna);
+      });
 
-        });
-
-        ativarBotoesAdicionar();
-
+      ativarBotoesAdicionar();
     });
-
 }
 
 campoBusca.addEventListener("input", () => {
+  const valorBusca = campoBusca.value.toLowerCase();
 
-    const valorBusca =
-    campoBusca.value.toLowerCase();
+  const cardsProdutos = document.querySelectorAll(".produto-card");
 
-    const cardsProdutos =
-    document.querySelectorAll(".produto-card");
+  cardsProdutos.forEach((card) => {
+    const nomeProduto = card
+      .querySelector(".nome-produto")
+      .textContent.toLowerCase();
 
-    cardsProdutos.forEach((card) => {
-
-        const nomeProduto =
-        card.querySelector(".nome-produto")
-        .textContent
-        .toLowerCase();
-
-        if(nomeProduto.includes(valorBusca)){
-
-            card.parentElement.style.display =
-            "block";
-
-        }else{
-
-            card.parentElement.style.display =
-            "none";
-
-        }
-
-    });
-
+    if (nomeProduto.includes(valorBusca)) {
+      card.parentElement.style.display = "block";
+    } else {
+      card.parentElement.style.display = "none";
+    }
+  });
 });
 
 categorias.forEach((categoria) => {
+  categoria.addEventListener("click", () => {
+    const categoriaSelecionada = categoria.dataset.categoria;
 
-    categoria.addEventListener("click", () => {
+    const cardsProdutos = document.querySelectorAll(".produto-card");
 
-        const categoriaSelecionada =
-        categoria.dataset.categoria;
+    cardsProdutos.forEach((card) => {
+      const categoriaCard = card.dataset.categoria;
 
-        const cardsProdutos =
-        document.querySelectorAll(".produto-card");
-
-        cardsProdutos.forEach((card) => {
-
-            const categoriaCard =
-            card.dataset.categoria;
-
-            if(
-
-                categoriaSelecionada === "todos" ||
-
-                categoriaCard === categoriaSelecionada
-
-            ){
-
-                card.parentElement.style.display =
-                "block";
-
-            }else{
-
-                card.parentElement.style.display =
-                "none";
-
-            }
-
-        });
-
+      if (
+        categoriaSelecionada === "todos" ||
+        categoriaCard === categoriaSelecionada
+      ) {
+        card.parentElement.style.display = "block";
+      } else {
+        card.parentElement.style.display = "none";
+      }
     });
-
+  });
 });
 
 botaoFinalizar.addEventListener("click", () => {
+  const nomeCliente = prompt("Digite seu nome:");
 
-    const nomeCliente =
-    prompt("Digite seu nome:");
+  const telefone = prompt("Digite seu telefone:");
 
-    const telefone =
-    prompt("Digite seu telefone:");
+  const endereco = prompt("Digite seu endereço:");
 
-    const endereco =
-    prompt("Digite seu endereço:");
+  if (!nomeCliente || !telefone || !endereco) {
+    alert("Preencha todos os dados!");
 
-    if(
-        !nomeCliente ||
-        !telefone ||
-        !endereco
-    ){
+    return;
+  }
 
-        alert(
-            "Preencha todos os dados!"
-        );
+  const totalComFrete = total + valorFrete;
 
-        return;
+  fetch("/pedidos", {
+    method: "POST",
 
-    }
+    headers: {
+      "Content-Type": "application/json",
+    },
 
-    const totalComFrete =
-    total + valorFrete;
+    body: JSON.stringify({
+      cliente: nomeCliente,
 
-    fetch("/pedidos", {
+      telefone,
 
-        method: "POST",
+      endereco,
 
-        headers: {
+      produtos: JSON.stringify(carrinho),
 
-            "Content-Type":
-            "application/json"
+      total: totalComFrete,
+    }),
+  })
+    .then((res) => res.text())
 
-        },
+    .then((dados) => {
+      alert("Pedido realizado com sucesso!");
 
-        body: JSON.stringify({
+      carrinho = [];
 
-            cliente: nomeCliente,
+      total = 0;
 
-            telefone,
-
-            endereco,
-
-            produtos: JSON.stringify(
-                carrinho
-            ),
-
-            total: totalComFrete
-
-        })
-
-    })
-
-    .then(res => res.text())
-
-    .then(dados => {
-
-        alert(
-            "Pedido realizado com sucesso!"
-        );
-
-        carrinho = [];
-
-        total = 0;
-
-        atualizarCarrinho();
-
+      atualizarCarrinho();
     });
-
 });
 
 carregarProdutos();
+
+console.log("Mais:", botaoMaisModal);
+console.log("Menos:", botaoMenosModal);
+console.log("Continuar:", botaoContinuar);
+console.log("Carrinho:", botaoIrCarrinho);
+console.log("Quantidade:", quantidadeModal);
+console.log("Modal:", modalAdicionado);
+console.log("Nome:", nomeProdutoModal);
+
+botaoMaisModal.addEventListener("click", () => {
+  quantidadeModal.textContent = Number(quantidadeModal.textContent) + 1;
+});
+
+botaoMenosModal.addEventListener("click", () => {
+  const quantidadeAtual = Number(quantidadeModal.textContent);
+
+  if (quantidadeAtual > 1) {
+    quantidadeModal.textContent = quantidadeAtual - 1;
+  }
+});
+
+botaoContinuar.addEventListener("click", () => {
+  const quantidade = Number(quantidadeModal.textContent);
+
+  if (quantidade <= 0) {
+    alert("Selecione uma quantidade!");
+
+    return;
+  }
+
+  const produtoExistente = carrinho.find(
+    (produto) => produto.nome === produtoSelecionado.nome,
+  );
+
+  if (produtoExistente) {
+    produtoExistente.quantidade += quantidade;
+  } else {
+    carrinho.push({
+      nome: produtoSelecionado.nome,
+
+      preco: produtoSelecionado.preco,
+
+      quantidade,
+    });
+  }
+
+  total += produtoSelecionado.preco * quantidade;
+
+  atualizarCarrinho();
+
+  modalAdicionado.style.display = "none";
+});
+
+botaoIrCarrinho.addEventListener("click", () => {
+  botaoContinuar.click();
+
+  const offcanvas = new bootstrap.Offcanvas(
+    document.getElementById("carrinhoLateral"),
+  );
+
+  offcanvas.show();
+});
+
+if (
+  !botaoMaisModal ||
+  !botaoMenosModal ||
+  !botaoContinuar ||
+  !botaoIrCarrinho
+) {
+  console.error("Algum botão do modal não foi encontrado.");
+}
